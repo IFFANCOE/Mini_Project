@@ -37,7 +37,10 @@
   }
 }
 
-.inpt{
-  display: flex;
+.top{
+  justify-content: center;
+  text-align: center;
+  justify-content: center;
+  justify-items: center;
   
 }
