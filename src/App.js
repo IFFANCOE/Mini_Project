@@ -1,91 +1,67 @@
-import Menu from './components/Menu'
-import { useState, useEffect } from 'react';
-import {firestore} from './index'
-import React from 'react';
-import  './components/login'
- const App = ()=> {
+import React, { Component } from 'react';
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import firebase from "firebase"
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
+import { Button, Carousel } from 'react-bootstrap';
+import { Router, Route,  IndexRoute } from "react-router"
+// import  list  from './components/list'
+import { render } from "react-dom"
 
- const [menus, setMenus] = useState([]);
- const [name,setName] = useState(''); 
+firebase.initializeApp({
+  apiKey: "AIzaSyDgWmjT7x7zGisRf3GnvsoDjEOj_vAbIZQ",
+  authDomain: "miniproject-240311.firebaseapp.com",
+  projectId: "miniproject-240311"
+})
 
- useEffect(()=>{
-    retriveData();
- },[])
-
-
- const retriveData =() =>{
-   firestore.collection("menus").onSnapshot( (snapshot) =>{
-     console.log(snapshot.docs)
-
- let mymenu= snapshot.docs.map( d =>{
-       const {id,name} = d.data()
-       console.log(id,name)
-       return {id,name}
-     } )
-     setMenus(mymenu)
-   })
- }
+class App extends Component {
 
 
- const deleteMenu = (id) =>{
- firestore.collection("menus").doc(id+"").delete()
- }
+  state = { isSignedIn: false }
 
- const editMenu = (id) => {
-   firestore.collection("menus").doc(id+"").set({id,name})
- }
+  uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: 'popup',
+    // We will display Google and Facebook as auth providers.
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      // Avoid redirects after sign-in.
+      signInSuccess: () => false
+    }
+  };
+  componentDidMount = () => {
 
-const renderMenu = () => {
- if (menus && menus.length) {
-   return menus.map((menu, index) => {
-     return (
-      <Menu key ={index} menu={menu}
-      deleteMenu={deleteMenu}
-      editMenu={editMenu}
-      
-      />
-     )
-   })
- }
- else{ return (<li> No Menu </li>) }
-   
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({ isSignedIn: !!user })
+    })
+  }
+
+  render() {
+    return (
+      <div className='App'>
+        {this.state.isSignedIn ? (
+          <span >
+           <div> This sign  </div> 
+            {/* <Router>
+              <Route exact path={"/"} component={list} />
+            </Router> */}
+
+            <Button variant="outline-primary" onClick={() => firebase.auth().signOut()}>sign out </Button>
+
+          </span>
+
+        ) : (
+            <StyledFirebaseAuth
+              uiConfig={this.uiConfig}
+              firebaseAuth={firebase.auth()} />
+          )}
+
+      </div>
+    )
+  }
 }
 
-const addMenu = () =>{ 
- let id = (menus.length === 0)?1:menus[menus.length-1].id +1 ;
-
- firestore.collection("menus").doc(id+"").set( {id, name} )
-}
-
-return (
- 
- <div >
-   <login/> 
-   <div className='top'>   
-   <tr>   
- <td>  <h1 >Menu</h1>  </td>
-   </tr>
-   <tr> 
-  <td> <div> <input type='text' name="name" onChange={ (e) =>{setName(e.target.value)}}/>  </div> </td>
-   </tr>
-  {/* <tr>
- <td><input type='file' accept='image/*'onChange={ (e) =>{setImg(e.target.value)}}/> </td> 
-  </tr> */}
-   <tr>
-   <td><div><button onClick={addMenu}>Summit</button> </div> </td>
-   </tr>
-  
-   </div>
-  
-  <div className="dis">
-  {renderMenu()}
-  </div> 
-
- </div>
-);
-
- }
-
- export default App;
-
-
+export default App;
