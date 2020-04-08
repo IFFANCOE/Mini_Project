@@ -7,6 +7,7 @@ import config from './config'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
+
 if( firebase.apps.length === 0)
 firebase.initializeApp(config)
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import {firestore} from './index'
 import React from 'react';
 import  './components/login'
-import {Link} from "react-router-dom"
+
  const list = ()=> {
 
  const [menus, setMenus] = useState([]);
@@ -69,12 +69,6 @@ return (
    <tr> 
   <td> <div> <input type='text' name="name" onChange={ (e) =>{setName(e.target.value)}}/>  </div> </td>
    </tr>
-
-  {/* <li> <Link to = {"/App"}>App</Link> </li> */}
-
-  {/* <tr>
- <td><input type='file' accept='image/*'onChange={ (e) =>{setImg(e.target.value)}}/> </td> 
-  </tr> */}
    <tr>
    <td><div><button onClick={addMenu}>Summit</button> </div> </td>
    </tr>
