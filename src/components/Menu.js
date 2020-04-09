@@ -6,7 +6,7 @@ export default props => {
     return (
         <li >
             <div className="id">
-                {id}
+                {id}  
             </div>
             <div className="name">
                 {name}
