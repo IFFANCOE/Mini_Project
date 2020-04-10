@@ -1,7 +1,21 @@
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { firestore } from '../index'
 import Menu from './Menu'
 import './Menu.css'
+import './List.css'
+
+const questions =[
+  {
+    question : ''
+  },
+  {
+
+  },
+  {
+
+  },
+
+]
 
 const List = () => {
 
@@ -46,7 +60,7 @@ const List = () => {
         )
       })
     }
-    else { return (<li> No Menu </li>) }
+    else { return (<li>  No answer </li>) }
 
   }
 
@@ -58,18 +72,36 @@ const List = () => {
 
   return (
 
-    <div >
-      <login />
-      <div className='top'>
-        <tr>
-          <td>  <h1 >Menu</h1>  </td>
-        </tr>
-        <tr>
-          <td> <div> <input type='text' name="name" onChange={(e) => { setName(e.target.value) }} />  </div> </td>
-        </tr>
-        <tr>
-          <td><div><button onClick={addMenu}>Summit</button> </div> </td>
-        </tr>
+    <div className='flex'>
+      
+     
+    <div>  <h5>พื้นที่ที่มีรายงานการระบาดต่อเนื่อง <br/>
+     ของโรคติดเชื้อไวรัสโคโรนา 2019 หรือโควิด-19
+      </h5>
+   <ol> 
+     <li>สาธารณรัฐประชาชนจีน (+ฮ่องกง มาเก๊า) </li>
+     <li>ญี่ปุ่น</li>
+     <li>เกาหลีใต้  </li>
+     <li>อิตาลี </li>
+     <li>อิหร่าน  </li>
+     <li>ฝรั่งเศส </li>
+     <li>เยอรมนี  </li> 
+     <li>สหรัฐอเมริกา </li> 
+     <li>สวิตเซอร์แลนด์ </li>
+     <li>นอร์เวย์  </li>
+     <li>เดนมาร์ก</li>  
+     <li>เนเธอร์แลนด์ </li>
+     <li>สวีเดน  </li>
+     <li> อังกฤษ</li>
+     </ol>  
+      </div>
+
+     <div className='top'>
+        <h1 >Your answer</h1>
+
+        <div> <input type='text' name="name" onChange={(e) => { setName(e.target.value) }} />  </div>
+        <div><button onClick={addMenu}>Summit</button> </div>
+
 
       </div>
 

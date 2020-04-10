@@ -1,8 +1,37 @@
 .top{
     justify-content: center;
+    justify-items: center;
+    height: 200px;
+    margin-top: 200px;
+    
+  }
+  .solid{
+    border: solid;
+    left: 50px;
+  }
+  ol {
+    background: #ff9999;
+    padding: 20px;
+    width: 250px;
+   margin-left: 70px;
+  }
+  
+  
+  ol li {
+    background: #ffe5e5;
+    padding: 5px;
+    margin-left: 25px;
+    margin-right: 35px
+  }
+  h5{
     text-align: center;
+    padding: 5px;
+  }
+  .flex{
+    display: flex;
+  }
+  .centerqr{
     justify-content: center;
     justify-items: center;
-    
   }
   
