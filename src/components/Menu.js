@@ -4,7 +4,8 @@ export default props => {
     const { menu, editMenu, deleteMenu } = props
     const { id, name } = menu
     return (
-        <li >
+        <div>
+     <li >
             <div className="id">
                 {id}  
             </div>
@@ -18,5 +19,7 @@ export default props => {
             </div>
             
         </li>
+        </div>
+   
     )
 }

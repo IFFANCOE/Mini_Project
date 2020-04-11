@@ -6,6 +6,7 @@
     width: 100%;
     height: 100%;
     
+    
 }
 .bubblesli{
     position: absolute;
@@ -15,7 +16,7 @@
     height: 25px;
     border: double 5px;
     animation: rotateOut 25s linear infinite;
-    bottom: 70px;
+    bottom:5px;
    right: 50px;
 }
 .bubblesli:nth-child(1){
