@@ -14,9 +14,10 @@
     display: block;
     width: 25px;
     height: 25px;
-    border: double 5px;
+    border-radius:  50%;
+    border: double 2px #2979ff ;
     animation: rotateOut 25s linear infinite;
-    bottom:5px;
+    bottom:-150pxpx;
    right: 50px;
 }
 .bubblesli:nth-child(1){
@@ -60,9 +61,10 @@
 }
 .bubblesli:nth-child(7){
     left: 48%;
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     animation-delay: 5s;
+    
 }
 .bubblesli:nth-child(8){
     left: 55%;

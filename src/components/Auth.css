@@ -8,7 +8,7 @@
   -webkit-animation: colorchange 50s;
 }
 
-    .hero-bkg-animated {
+    /* .hero-bkg-animated {
       background: gray url(https://subtlepatterns.com/patterns/geometry2.png) repeat 0 0;
       width: 100%;
       margin: 0;
@@ -18,7 +18,7 @@
       box-sizing: border-box;
       -webkit-animation: slide 20s linear infinite;
       
-    }
+    } */
     @-webkit-keyframes slide {
       from { background-position: 0 0; }
       to { background-position: -400px 0; }

@@ -23,7 +23,8 @@ const Auth = props => {
     // We will display Google and Facebook as auth providers.
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.GithubAuthProvider.PROVIDER_ID
     ],
     callbacks: {
       // Avoid redirects after sign-in.
@@ -32,7 +33,8 @@ const Auth = props => {
   };
   useEffect(() => {
 
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => 
+      {
       setIsSignedIn(!!user)
     })
   }, [])
@@ -41,11 +43,11 @@ const Auth = props => {
     
     <div  >
      
-      {isSignedIn ?
+      {
+        isSignedIn ?
        (
         <span >
           
-          <div><Button variant="outline-primary">Push this</Button> </div>
           <List/>
         <div> <Button variant="outline-primary" onClick={() => firebase.auth().signOut()}>sign out </Button></div>
         </span>
@@ -54,12 +56,15 @@ const Auth = props => {
       (
         <div className='backgr'>
          Please login with
+
            <StyledFirebaseAuth   
             uiConfig={uiConfig}
             firebaseAuth={firebase.auth()} />
         </div>
          
-        )}
+        )
+        
+        }
     </div>
   )
 
