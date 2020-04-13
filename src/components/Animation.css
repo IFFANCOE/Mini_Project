@@ -15,9 +15,9 @@
     width: 25px;
     height: 25px;
     border-radius:  50%;
-    border: double 2px #2979ff ;
+    border: double 2px #c92424 ;
     animation: rotateOut 25s linear infinite;
-    bottom:-150pxpx;
+    bottom: auto;
    right: 50px;
 }
 .bubblesli:nth-child(1){

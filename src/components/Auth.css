@@ -1,11 +1,6 @@
-.backgr{
-  
-  margin-top: 250px;
-  margin-left: 650px;
-  height:  300px;
-  width: 300px;
-  animation: colorchange 50s;
-  -webkit-animation: colorchange 50s;
+img{
+  height: 300px;
+  width: 350px;
 }
 
     /* .hero-bkg-animated {

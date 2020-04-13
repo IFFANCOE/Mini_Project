@@ -50,21 +50,23 @@ const Auth = props => {
             <div>
               <List />
               <span >
-                <div> <Button variant="outline-primary" onClick={() => firebase.auth().signOut()}>sign out </Button></div>
               </span>
             </div>
+
           ) :
-
           (
-            <div className='backgr'>
-
-
-             
-              Please login with
-
+            <div >
+              <div >
+                <img 
+                src="https://static.posttoday.com/media/content/2020/02/27/87A54544442C131C93466FB39F0F9628.jpg" />
+              <br/>
+                Please login with
            <StyledFirebaseAuth
-                uiConfig={uiConfig}
-                firebaseAuth={firebase.auth()} />
+                  uiConfig={uiConfig}
+                  firebaseAuth={firebase.auth()} />
+
+              </div>
+
 
             </div>
 

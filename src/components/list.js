@@ -4,7 +4,9 @@ import Answer from './Answer'
 import './Answer.css'
 import './List.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button,  } from 'react-bootstrap';
 import { InputGroup } from 'react-bootstrap';
+import firebase from "firebase"
 
 const qa = [
   'ข้อที่ 1 : ท่านเดินทางหรืออยู่อาศัยในพื้นที่ที่มีรายงานการระบาดต่อเนื่องของโควิด-19 ใน 14 วันที่ผ่านมา  '
@@ -59,13 +61,18 @@ const List = (props) => {
   const renderAnswer = () => {
     if (questions && questions.length) {
       return questions.map((question, index) => {
-        return (
-          <Answer key={index} question={question}
-            deleteAnswer={deleteAnswer}
-            editAnswer={editAnswer}
-            index={index + 1}
-          />
-        )
+
+        if(index < 5 ){
+          return (
+            <Answer key={index} question={question}
+              deleteAnswer={deleteAnswer}
+              editAnswer={editAnswer}
+              index={index + 1}
+            />
+          )
+        }
+        
+        
       })
     }
     else { return (<li>  No answer  </li>) }
@@ -78,17 +85,24 @@ const List = (props) => {
   //   firestore.collection("questions").doc(id + "").set({ id, answer })
 
   // }
-
+const i =0 ;
   const addAnswer1 = () => {
     let id = (questions.length === 0) ? 1 : questions[questions.length - 1].id + 1;
-    datas.push('yes')
-    firestore.collection("questions").doc(id + "").set({ id, answer: 'yes' })
-
+    if(id <=5){ 
+      datas.push('yes')
+      firestore.collection("questions").doc(id + "").set({ id, answer: 'yes' })
+      
+    }
+    
   }
+  
   const addAnswer2 = () => {
     let id = (questions.length === 0) ? 1 : questions[questions.length - 1].id + 1;
-    datas.push('no')
-    firestore.collection("questions").doc(id + "").set({ id, answer: 'no' })
+    if(id <=5){
+      datas.push('no')
+      firestore.collection("questions").doc(id + "").set({ id, answer: 'no' })
+    }
+   
   }
 
 
@@ -103,6 +117,7 @@ const List = (props) => {
   })
   Percent = Percent / qa.length * 100; //กรณีมี5ข้อ
   console.log(Percent);
+
   return (
 
     <div>
@@ -110,6 +125,7 @@ const List = (props) => {
       </div>
       <h3>ระดับความเสี่ยงและคำแนะนำในการปฏิบัติตน COVID-19 <br/>
           Risk levels and recommendations for self assessment during COVID-19 </h3>
+          <div> <Button variant="outline-primary" onClick={() => firebase.auth().signOut()}>sign out </Button></div>
       <div >
         <h5>พื้นที่ที่มีรายงานการระบาดต่อเนื่อง <br />
           ของโรคติดเชื้อ(Covid-19)
@@ -173,6 +189,7 @@ const List = (props) => {
       </div>
       <div className='top'>
         <h1 >Your answer</h1>
+
         <div>
           <h1 style={{ color: "orange" }}>{Percent}%</h1>
 
@@ -187,17 +204,12 @@ const List = (props) => {
             )
             : alert("ตอบครบทุกข้อเเล้ว")
           }
-
+<br/>
         </div>
-        {/* <div> <input type='text' answer="answer" onChange={(e) => { setAnswer(e.target.value) }} />  </div>
-        <div><button onClick={addMenu}>Summit</button> </div> */}
-        {/* <button onClick={addAnswer1}>yes</button>
-        <button onClick={addAnswer2}>no</button> */}
 
-        <button onClick={() => addAnswer1("YES")}>Yes</button>
-        <button onClick={() => addAnswer2("NO")}>No</button>
-
-
+       
+       <Button  variant="danger" onClick={() => addAnswer1("YES")}>Yes</Button >      
+        <Button  variant="success" onClick={() => addAnswer2("NO")}>No</Button >
       </div>
 
 
