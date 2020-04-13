@@ -5,6 +5,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import { Button, Carousel } from 'react-bootstrap';
 import List from './List'
 import './Auth.css'
+import { CLIENT_RENEG_LIMIT } from 'tls';
 
 firebase.initializeApp({
   apiKey: "AIzaSyDgWmjT7x7zGisRf3GnvsoDjEOj_vAbIZQ",
@@ -13,7 +14,7 @@ firebase.initializeApp({
 })
 
 const Auth = props => {
-
+  const { setLogin } = props;
   const [isSignedIn, setIsSignedIn] = useState(false)
 
 
@@ -33,38 +34,43 @@ const Auth = props => {
   };
   useEffect(() => {
 
-    firebase.auth().onAuthStateChanged(user => 
-      {
+    firebase.auth().onAuthStateChanged(user => {
       setIsSignedIn(!!user)
     })
   }, [])
+  console.log(isSignedIn);
 
   return (
-    
+
     <div  >
-     
+
       {
         isSignedIn ?
-       (
-        <span >
-          
-          <List/>
-        <div> <Button variant="outline-primary" onClick={() => firebase.auth().signOut()}>sign out </Button></div>
-        </span>
-        ) : 
-      
-      (
-        <div className='backgr'>
-         Please login with
+          (
+            <div>
+              <List />
+              <span >
+                <div> <Button variant="outline-primary" onClick={() => firebase.auth().signOut()}>sign out </Button></div>
+              </span>
+            </div>
+          ) :
 
-           <StyledFirebaseAuth   
-            uiConfig={uiConfig}
-            firebaseAuth={firebase.auth()} />
-        </div>
-         
-        )
-        
-        }
+          (
+            <div className='backgr'>
+
+
+             
+              Please login with
+
+           <StyledFirebaseAuth
+                uiConfig={uiConfig}
+                firebaseAuth={firebase.auth()} />
+
+            </div>
+
+          )
+
+      }
     </div>
   )
 

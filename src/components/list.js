@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../index'
-import Menu from './Menu'
-import './Menu.css'
+import Answer from './Answer'
+import './Answer.css'
 import './List.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { InputGroup } from 'react-bootstrap';
 
-const questions = [
+const qa = [
   'ข้อที่ 1 : ท่านเดินทางหรืออยู่อาศัยในพื้นที่ที่มีรายงานการระบาดต่อเนื่องของโควิด-19 ใน 14 วันที่ผ่านมา  '
   , 'ข้อที่ 2 : ท่านเป็นผู้ที่ประกอบอาชีพที่สัมผัสใกล้ชิดกับนักท่องเที่ยวต่างชาติสัมผัสใกล้ชิดและนานมากกว่า 5 นาที'
   , 'ข้อที่ 3 : มีประวัติใกล้ชิดหรือสัมผัสกับผู้ป่วยเข้าข่ายหรือยืนยันโรคติดเชื้อโควิด-19'
@@ -15,17 +15,17 @@ const questions = [
 
 ]
 
-const questionsEngs = [
+const qaEng = [
   'question 1: You have traveled or resided in an area that reported continuous outbreaks of Covid-19 in the past 14 days.',
   'question 2: You are a person who works closely with foreign tourists, stays in touch for more than 5 minutes.',
   'question 3: Having a close history or contact with patients under the scope of or confirming the Covid-19 infection',
   'question 4: There are co-residents returning from the reporting area. Covid-Infection Outbreak',
   'question 5: Are medical or public health personnel Who contacted the patient into questioning the investigation of the Covid-19 infection',
 ]
-const List = () => {
-
-  const [menus, setMenus] = useState([]);
-  const [name, setName] = useState('');
+const List = (props) => {
+  // const { LoopArray } = props;
+  const [questions, setQuestions] = useState([]);
+  const [answer, setAnswer] = useState('');
 
   useEffect(() => {
     retriveData();
@@ -34,90 +34,83 @@ const List = () => {
   let datas = []
 
   const retriveData = () => {
-    firestore.collection("menus").onSnapshot((snapshot) => {
+    firestore.collection("questions").onSnapshot((snapshot) => {
       console.log(snapshot.docs)
 
-      let mymenu = snapshot.docs.map(d => {
-        const { id, name } = d.data()
-        console.log(id, name)
-        datas.push([...datas, name])
-        return { id, name }
+      let myanswer = snapshot.docs.map(d => {
+        const { id, answer } = d.data()
+        console.log(id, answer)
+        datas.push([...datas, answer])
+        return { id, answer }
       })
-      setMenus(mymenu)
+      setQuestions(myanswer)
     })
   }
 
 
-  const deleteMenu = (id) => {
-    firestore.collection("menus").doc(id + "").delete()
+  const deleteAnswer = (id) => {
+    firestore.collection("questions").doc(id + "").delete()
   }
 
-  const editMenu = (id) => {
-    firestore.collection("menus").doc(id + "").set({ id, name })
+  const editAnswer = (id) => {
+    firestore.collection("questions").doc(id + "").set({ id, answer })
   }
 
-  const renderMenu = () => {
-    if (menus && menus.length) {
-      return menus.map((menu, index) => {
+  const renderAnswer = () => {
+    if (questions && questions.length) {
+      return questions.map((question, index) => {
         return (
-          <Menu key={index} menu={menu}
-            deleteMenu={deleteMenu}
-            editMenu={editMenu}
-
+          <Answer key={index} question={question}
+            deleteAnswer={deleteAnswer}
+            editAnswer={editAnswer}
+            index={index + 1}
           />
         )
       })
     }
-    else { return (<li>  No answer </li>) }
+    else { return (<li>  No answer  </li>) }
   }
 
-  // const addMenu = () => {
-  //   let id = (menus.length === 0) ? 1 : menus[menus.length - 1].id + 1;
 
-  //   firestore.collection("menus").doc(id + "").set({ id, name })
+  // const addMenu = () => {
+  //   let id = (questions.length === 0) ? 1 : questions[questions.length - 1].id + 1;
+
+  //   firestore.collection("questions").doc(id + "").set({ id, answer })
 
   // }
 
-  const addMenu1 = () => {
-    let id = (menus.length === 0) ? 1 : menus[menus.length - 1].id + 1;
+  const addAnswer1 = () => {
+    let id = (questions.length === 0) ? 1 : questions[questions.length - 1].id + 1;
     datas.push('yes')
-    firestore.collection("menus").doc(id + "").set({ id, name: 'yes' })
+    firestore.collection("questions").doc(id + "").set({ id, answer: 'yes' })
 
   }
-  const addMenu2 = () => {
-    let id = (menus.length === 0) ? 1 : menus[menus.length - 1].id + 1;
-    datas.push( 'no')
-    firestore.collection("menus").doc(id + "").set({ id, name: 'no' })
-
+  const addAnswer2 = () => {
+    let id = (questions.length === 0) ? 1 : questions[questions.length - 1].id + 1;
+    datas.push('no')
+    firestore.collection("questions").doc(id + "").set({ id, answer: 'no' })
   }
 
-  
-  console.log(datas)
 
-let Arrays = [];
-  const CLick = () => {
-    let id = (menus.length === 0) ? 1 : menus[menus.length - 1].id + 1;
-    
-    firestore.collection("menus").doc(id + "").set({ id, name: 'yes' }).then(() => {
-       Arrays.push("yes")
+
+  const [LoopArray, setLoopArray] = useState([]);
+  console.log(LoopArray);
+  let Percent = 0;
+  let LoopPercent = LoopArray.map((ans, index) => {
+    if (ans === "YES") {
+      Percent++;
     }
-    
-    )
-
-   
-  }
-  console.log(Arrays)
-
+  })
+  Percent = Percent / qa.length * 100; //กรณีมี5ข้อ
+  console.log(Percent);
   return (
 
     <div>
       <div>
-      
-    </div>
-      <h2>ระดับความเสี่ยงและคำแนะนำในการปฏิบัติตน COVID19 </h2>
+      </div>
+      <h3>ระดับความเสี่ยงและคำแนะนำในการปฏิบัติตน COVID-19 <br/>
+          Risk levels and recommendations for self assessment during COVID-19 </h3>
       <div >
-
-
         <h5>พื้นที่ที่มีรายงานการระบาดต่อเนื่อง <br />
           ของโรคติดเชื้อ(Covid-19)
       </h5>
@@ -143,7 +136,7 @@ let Arrays = [];
             <div className='marginques'>
               <InputGroup.Prepend>
                 <InputGroup.Text>
-                  <h4>ให้ตอบ ใช่/ไม่ใช่ <br /> Yes or No </h4>
+                  <p>ให้ตอบ ใช่/ไม่ใช่ <br /> Yes or No </p>
                 </InputGroup.Text>
               </InputGroup.Prepend>
             </div>
@@ -151,10 +144,10 @@ let Arrays = [];
             <div className='marginques' >
               {
 
-                questions.map(question =>
+                qa.map(qa =>
                   <InputGroup.Prepend>
                     <InputGroup.Text>
-                      {question}<br />
+                      {qa}<br />
                     </InputGroup.Text><br /><br />
                   </InputGroup.Prepend>
                 )
@@ -164,10 +157,10 @@ let Arrays = [];
             <div className='marginques2' >
               {
 
-                questionsEngs.map(questionsEng =>
+                qaEng.map(qaEng =>
                   <InputGroup.Prepend>
                     <InputGroup.Text>
-                      {questionsEng}<br />
+                      {qaEng}<br />
                     </InputGroup.Text><br /><br />
                   </InputGroup.Prepend>)
               }
@@ -178,22 +171,40 @@ let Arrays = [];
 
         </div>
       </div>
-
       <div className='top'>
         <h1 >Your answer</h1>
+        <div>
+          <h1 style={{ color: "orange" }}>{Percent}%</h1>
 
-        {/* <div> <input type='text' name="name" onChange={(e) => { setName(e.target.value) }} />  </div>
+          <p>TEST</p>
 
+          {LoopArray.length < qa.length ?
+            (
+              <div>
+                <button onClick={() => setLoopArray([...LoopArray, "YES"])}>YES</button>
+                <button onClick={() => setLoopArray([...LoopArray, "NO"])}>NO</button>
+              </div>
+            )
+            : alert("ตอบครบทุกข้อเเล้ว")
+          }
+
+        </div>
+        {/* <div> <input type='text' answer="answer" onChange={(e) => { setAnswer(e.target.value) }} />  </div>
         <div><button onClick={addMenu}>Summit</button> </div> */}
-        <button onClick={addMenu1}>yes</button>
-        <button onClick={addMenu2}>no</button>
-        <button onClick={CLick}>555</button>
+        {/* <button onClick={addAnswer1}>yes</button>
+        <button onClick={addAnswer2}>no</button> */}
+
+        <button onClick={() => addAnswer1("YES")}>Yes</button>
+        <button onClick={() => addAnswer2("NO")}>No</button>
+
+
       </div>
+
 
       <div className="dis">
-        {renderMenu()}
-
+        {renderAnswer()}
       </div>
+
 
     </div>
   );
