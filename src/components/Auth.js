@@ -2,16 +2,10 @@ import React, { Component, useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import firebase from "firebase"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-import { Button, Carousel } from 'react-bootstrap';
+
 import List from './List'
 import './Auth.css'
-import { CLIENT_RENEG_LIMIT } from 'tls';
-
-firebase.initializeApp({
-  apiKey: "AIzaSyDgWmjT7x7zGisRf3GnvsoDjEOj_vAbIZQ",
-  authDomain: "miniproject-240311.firebaseapp.com",
-  projectId: "miniproject-240311"
-})
+import Login from './login';
 
 const Auth = props => {
   const { setLogin } = props;
@@ -61,17 +55,15 @@ const Auth = props => {
                 src="https://static.posttoday.com/media/content/2020/02/27/87A54544442C131C93466FB39F0F9628.jpg" />
               <br/>
                 Please login with
+                <div className='flx'> 
+                
            <StyledFirebaseAuth
                   uiConfig={uiConfig}
                   firebaseAuth={firebase.auth()} />
-
+                </div>              
               </div>
-
-
             </div>
-
           )
-
       }
     </div>
   )
