@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { firestore } from '../index'
+import { firestore } from '../config/config'
 import Answer from './Answer'
 import './Answer.css'
 import './List.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button,  } from 'react-bootstrap';
+import { Button, FormControl } from 'react-bootstrap';
 import { InputGroup } from 'react-bootstrap';
-import firebase from "firebase"
+import Topbar from './Topbar'
+import Result from './Result'
 
 const qa = [
   'ข้อที่ 1 : ท่านเดินทางหรืออยู่อาศัยในพื้นที่ที่มีรายงานการระบาดต่อเนื่องของโควิด-19 ใน 14 วันที่ผ่านมา  '
@@ -25,16 +26,12 @@ const qaEng = [
   'question 5: Are medical or public health personnel Who contacted the patient into questioning the investigation of the Covid-19 infection',
 ]
 const List = (props) => {
-  // const { LoopArray } = props;
   const [questions, setQuestions] = useState([]);
   const [answer, setAnswer] = useState('');
-
   useEffect(() => {
     retriveData();
   }, [])
-
   let datas = []
-
   const retriveData = () => {
     firestore.collection("questions").onSnapshot((snapshot) => {
       console.log(snapshot.docs)
@@ -48,21 +45,26 @@ const List = (props) => {
       setQuestions(myanswer)
     })
   }
-
-
   const deleteAnswer = (id) => {
     firestore.collection("questions").doc(id + "").delete()
   }
 
   const editAnswer = (id) => {
-    firestore.collection("questions").doc(id + "").set({ id, answer })
+    if (answer == "Yes") {
+      firestore.collection("questions").doc(id + "").set({ id, answer })
+    }
+    else if (answer == "No") {
+      firestore.collection("questions").doc(id + "").set({ id, answer })
+    } else
+      alert(' "Yes" or "No" only')
+
+
   }
 
   const renderAnswer = () => {
     if (questions && questions.length) {
       return questions.map((question, index) => {
-
-        if(index < 5 ){
+        if (index < 5) {
           return (
             <Answer key={index} question={question}
               deleteAnswer={deleteAnswer}
@@ -71,61 +73,36 @@ const List = (props) => {
             />
           )
         }
-        
-        
       })
     }
     else { return (<li>  No answer  </li>) }
   }
-
-
-  // const addMenu = () => {
-  //   let id = (questions.length === 0) ? 1 : questions[questions.length - 1].id + 1;
-
-  //   firestore.collection("questions").doc(id + "").set({ id, answer })
-
-  // }
-const i =0 ;
   const addAnswer1 = () => {
     let id = (questions.length === 0) ? 1 : questions[questions.length - 1].id + 1;
-    if(id <=5){ 
-      datas.push('yes')
-      firestore.collection("questions").doc(id + "").set({ id, answer: 'yes' })
-      
+    if (id <= 5) {
+      datas.push('Yes')
+      firestore.collection("questions").doc(id + "").set({ id, answer: 'Yes' })
     }
-    
+
   }
-  
+
   const addAnswer2 = () => {
     let id = (questions.length === 0) ? 1 : questions[questions.length - 1].id + 1;
-    if(id <=5){
-      datas.push('no')
-      firestore.collection("questions").doc(id + "").set({ id, answer: 'no' })
+    if (id <= 5) {
+      datas.push('No')
+      firestore.collection("questions").doc(id + "").set({ id, answer: 'No' })
     }
-   
+
   }
-
-
-
-  const [LoopArray, setLoopArray] = useState([]);
-  console.log(LoopArray);
-  let Percent = 0;
-  let LoopPercent = LoopArray.map((ans, index) => {
-    if (ans === "YES") {
-      Percent++;
-    }
-  })
-  Percent = Percent / qa.length * 100; //กรณีมี5ข้อ
-  console.log(Percent);
 
   return (
 
     <div>
-      <div>
-      </div>
-      <h3>ระดับความเสี่ยงและคำแนะนำในการปฏิบัติตน COVID-19 <br/>
-          Risk levels and recommendations for self assessment during COVID-19 </h3>
-          <div> <Button variant="outline-primary" onClick={() => firebase.auth().signOut()}>sign out </Button></div>
+
+      <Topbar />
+      <h3>ระดับความเสี่ยงและคำแนะนำในการปฏิบัติตน COVID-19 <br />
+        Risk levels and recommendations for self assessment during COVID-19 </h3>
+
       <div >
         <h5>พื้นที่ที่มีรายงานการระบาดต่อเนื่อง <br />
           ของโรคติดเชื้อ(Covid-19)
@@ -152,7 +129,7 @@ const i =0 ;
             <div className='marginques'>
               <InputGroup.Prepend>
                 <InputGroup.Text>
-                  <p>ให้ตอบ ใช่/ไม่ใช่ <br /> Yes or No </p>
+                  <p className >ให้ตอบ ใช่/ไม่ใช่ ใต้คำถาม<br />Answer yes / no under  questions.</p>
                 </InputGroup.Text>
               </InputGroup.Prepend>
             </div>
@@ -190,35 +167,36 @@ const i =0 ;
       <div className='top'>
         <h1 >Your answer</h1>
 
-        <div>
-          <h1 style={{ color: "orange" }}>{Percent}%</h1>
 
-          <p>TEST</p>
+        <div className='space'>
+          <Button variant="outline-danger" onClick={() => addAnswer1("YES")}>Yes</Button >
+          <Button variant="outline-success" onClick={() => addAnswer2("NO")}>No</Button >
 
-          {LoopArray.length < qa.length ?
-            (
-              <div>
-                <button onClick={() => setLoopArray([...LoopArray, "YES"])}>YES</button>
-                <button onClick={() => setLoopArray([...LoopArray, "NO"])}>NO</button>
-              </div>
-            )
-            : alert("ตอบครบทุกข้อเเล้ว")
-          }
-<br/>
         </div>
 
-       
-       <Button  variant="danger" onClick={() => addAnswer1("YES")}>Yes</Button >      
-        <Button  variant="success" onClick={() => addAnswer2("NO")}>No</Button >
+         <div > <br />
+          <FormControl className='width'
+            placeholder="Edit the answer here"
+            aria-label="Edit the answer here"
+            aria-describedby="basic-addon1"
+            type='text' name="name" onChange={(e) => { setAnswer(e.target.value) }}
+          />
+        </div>
+
       </div>
-
-
       <div className="dis">
         {renderAnswer()}
       </div>
+      <h1>Confrom answer </h1>
+      <div>
+        <div>
+          <Result/>
+        </div>
 
-
+      </div>
     </div>
+
+
   );
 
 }

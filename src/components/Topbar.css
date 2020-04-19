@@ -1,0 +1,21 @@
+.topright{
+    justify-content: end;
+    justify-items: end;
+    
+}
+.imgpage{
+    width:130px;
+    height: 80px;
+    border-radius: 50%;
+}
+.img{
+width: 60px;
+height: 60px;
+}
+.bgtop{
+    background:  rgb(255, 255, 255);
+}
+.Email{
+ margin-right: 30px;
+ margin-left: 5px;
+}

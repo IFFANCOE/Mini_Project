@@ -1,3 +1,4 @@
+import firebase from "firebase"
 
 const config = {
     apiKey: "AIzaSyDgWmjT7x7zGisRf3GnvsoDjEOj_vAbIZQ",
@@ -10,4 +11,10 @@ const config = {
     measurementId: "G-F0GSH2EJ62"
   };
 
-  export default config
+  
+// if( firebase.apps.length === 0)
+const fbc = firebase.initializeApp(config)
+
+export const firestore = firebase.firestore();
+
+  export default fbc;

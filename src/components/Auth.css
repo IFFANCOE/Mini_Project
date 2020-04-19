@@ -1,6 +1,6 @@
 img{
   height: 300px;
-  width: 350px;
+  width: 500px;
 }
 
     /* .hero-bkg-animated {
@@ -19,6 +19,8 @@ img{
       to { background-position: -400px 0; }
   }
   
-   .shadowmain{
-
+   .flx{
+display: flex;
+justify-content: center;
+margin: auto;
    }

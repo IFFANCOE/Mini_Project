@@ -1,9 +1,14 @@
 .li {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 180px;
-    height: 150px;
-    margin: 0   16px    16px    0;
+    height: 200px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.15);
+    margin: 0 16px 16px 0;
+    border-radius: 4px;
+    overflow: hidden;
+    border: dashed 1px #000000 ;
    
     }
     .answer{
@@ -15,13 +20,15 @@
         flex: 1;
        
     }
-    .dis{
-        display: flex;
-        
-        list-style: none;
-        margin: 15px;
-        
-    }
-    .bor{
-        border: dashed 1px #000000 ;
-    }
+   
+   
+.id {
+   position: absolute;
+   right: 4px;
+   top: 2px;
+}
+.answer {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bolder;
+}
