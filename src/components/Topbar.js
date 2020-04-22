@@ -24,7 +24,7 @@ const Topbar = () => {
                     <div className='topright'>
                     
                         <img alt='profile picture' className='img'  src={firebase.auth().currentUser.photoURL} />
-                                <span className='Email'>{firebase.auth().currentUser.displayName}</span>                           
+                                <span className='Email'>{firebase.auth().currentUser.email}</span>                           
                                                       
                             <span >
                                 <Button variant="outline-danger" onClick={() => firebase.auth().signOut()}>Logout</Button>

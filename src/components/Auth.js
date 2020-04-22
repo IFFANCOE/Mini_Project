@@ -2,16 +2,16 @@ import React, { Component, useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import firebase from "firebase"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-
 import List from './List'
 import './Auth.css'
-import Login from './login';
+import axios from 'axios'
+import { green } from 'color-name';
+
 
 const Auth = props => {
   const { setLogin } = props;
   const [isSignedIn, setIsSignedIn] = useState(false)
-
-
+  const [api, setApi] = useState({});
   const uiConfig = {
     // Popup signin flow rather than redirect flow.
     signInFlow: 'popup',
@@ -27,7 +27,15 @@ const Auth = props => {
     }
   };
   useEffect(() => {
-
+    axios.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations')
+      .then(function (response) {
+        console.log(response.data);
+        const { latest } = response.data
+        setApi({ confirmed: latest.confirmed, deaths: latest.deaths })
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
     firebase.auth().onAuthStateChanged(user => {
       setIsSignedIn(!!user)
     })
@@ -51,18 +59,37 @@ const Auth = props => {
           (
             <div >
               <div >
-                <img 
-                src="https://static.posttoday.com/media/content/2020/02/27/87A54544442C131C93466FB39F0F9628.jpg" />
-              <br/>
-                Please login with
-                <div className='flx'> 
-                
-           <StyledFirebaseAuth
-                  uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
-                </div>              
+                <div className='cen'>
+                  <img style={{width:400 ,height:200 }}
+                    src="https://static.posttoday.com/media/content/2020/02/27/87A54544442C131C93466FB39F0F9628.jpg" />
+                </div>
+
+                <div className='flxde'>
+
+                  <div>
+                    <div className='flxde'>
+                      <div className='latest'>
+                        <h5> สถานการณ์ปัจจุบัน</h5> ได้รับการยืนยันแล้ว:<h4> {api.confirmed} </h4> การเสียชีวิต:<h4>{api.deaths}</h4>
+                      </div>
+                      <div className='latest'> <h5> Current situation</h5> confirmed: <h4> {api.confirmed} </h4> deaths:<h4>{api.deaths}</h4> </div>
+                    </div>
+                    <img src="https://storage.googleapis.com/techsauce-prod/ugc/uploads/2020/3/covid19worldmap-546.jpg" style={{padding: 10}}/>
+                  </div>
+
+                  <div className='login'>
+                    Please login with
+                     <div >
+                      <StyledFirebaseAuth
+                        uiConfig={uiConfig}
+                        firebaseAuth={firebase.auth()} />
+                    </div>
+                  </div>
+
+
+                </div>
               </div>
             </div>
+
           )
       }
     </div>

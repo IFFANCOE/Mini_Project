@@ -28,9 +28,15 @@ const qaEng = [
 const List = (props) => {
   const [questions, setQuestions] = useState([]);
   const [answer, setAnswer] = useState('');
+ 
+
   useEffect(() => {
+   
     retriveData();
+
   }, [])
+ 
+
   let datas = []
   const retriveData = () => {
     firestore.collection("questions").onSnapshot((snapshot) => {
@@ -103,6 +109,7 @@ const List = (props) => {
       <h3>ระดับความเสี่ยงและคำแนะนำในการปฏิบัติตน COVID-19 <br />
         Risk levels and recommendations for self assessment during COVID-19 </h3>
 
+      
       <div >
         <h5>พื้นที่ที่มีรายงานการระบาดต่อเนื่อง <br />
           ของโรคติดเชื้อ(Covid-19)
@@ -125,13 +132,16 @@ const List = (props) => {
             <li>สวีเดน(Sweden)  </li>
             <li> อังกฤษ(England)</li>
           </ol>
+
           <div>
             <div className='marginques'>
+
               <InputGroup.Prepend>
                 <InputGroup.Text>
                   <p className >ให้ตอบ ใช่/ไม่ใช่ ใต้คำถาม<br />Answer yes / no under  questions.</p>
                 </InputGroup.Text>
               </InputGroup.Prepend>
+
             </div>
 
             <div className='marginques' >
@@ -165,6 +175,7 @@ const List = (props) => {
         </div>
       </div>
       <div className='top'>
+
         <h1 >Your answer</h1>
 
 
@@ -174,7 +185,7 @@ const List = (props) => {
 
         </div>
 
-         <div > <br />
+        <div > <br />
           <FormControl className='width'
             placeholder="Edit the answer here"
             aria-label="Edit the answer here"
@@ -190,7 +201,7 @@ const List = (props) => {
       <h1>Confrom answer </h1>
       <div>
         <div>
-          <Result/>
+          <Result />
         </div>
 
       </div>

@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CLIENT_RENEG_LIMIT } from 'tls'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button,  } from 'react-bootstrap';
 export default props => {
     const {  question, editAnswer, deleteAnswer } = props
     const { id, answer } = question
-   
+    
     
     return (
         <div className ='bor'>
