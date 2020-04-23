@@ -15,7 +15,7 @@ const Topbar = () => {
 
             <div className="navbar bgtop">
 
-
+        <img src="https://www.phuket.psu.ac.th/wp-content/uploads/2019/03/cropped-PSU_PHUKET-EN.png" style={{width:200 ,height:80}} />
                 <img src="https://static.posttoday.com/media/content/2020/02/27/87A54544442C131C93466FB39F0F9628.jpg" className='imgpage' />
 
 

@@ -6,7 +6,7 @@ import Auth from './components/Auth'
 import List from './components/List'
 const App = () => {
   const [LoopArray, setLoopArray] = useState([]);
-  console.log(LoopArray);
+  
   const [login, setLogin] = useState(false);
   
   const Display = (
